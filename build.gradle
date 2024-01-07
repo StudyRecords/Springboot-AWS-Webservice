@@ -1,6 +1,29 @@
-plugins {
-    id 'java'
+// 프로젝트의 플러그인 의존성 관리를 위한 설정
+buildscript {
+    ext{        //전역변수 설정
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {      // 각종 라이브러리들의 의존성을 어떤 원격 저장소에서 받을지 정함
+        mavenCentral()  // 복잡
+        jcenter()       //더 간단
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+//plugins {
+//    id 'java'
+//    id 'eclipse'
+//    id 'org.springframework.boot'
+//    id 'io.spring.dependency-management'
+//}
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -9,9 +32,11 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
+dependencies {      // 프로젝트 개발에 필요한 의존성들을 선언한다.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    compileOnly('org.springframework.boot:spring-boot-starter-web')
+    testCompileOnly('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {
