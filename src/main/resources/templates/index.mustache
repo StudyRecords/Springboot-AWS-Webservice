@@ -11,6 +11,15 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+
+                <!-- 조건문 (처음 #이 userName 값이 존재하는 경우, ^는 userName이 없는 경우) -->
+                {{#userName}}       <!-- List를 순회,  "/logout" : 스프링 시큐리티에서 기본적으로 제공하는 로그아웃 url (컨트롤러에서 구현할 필요X), securityConfig에서 url 변경 가능-->
+                    Logged in as: <span id="user">{{userName}}</span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                {{/userName}}
+                {{^userName}}       <!-- 해당 값이 존재하지 않는 경우 : 구글 로그인 버튼 노출시키기 (얘도 스프링 시큐리티에서 기본적으로 제공하는 로그인 url임)-->
+                    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                {{/userName}}
             </div>
         </div>
         <br>

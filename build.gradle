@@ -42,6 +42,7 @@ dependencies {      // 프로젝트 개발에 필요한 의존성들을 선언�
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')     // spring data jpa : spring data jpa 추상화 라이브러리
     implementation('com.h2database:h2')                                         // h2 데이터베이스 : 인메모리 관계형 데이터베이스
     implementation('org.springframework.boot:spring-boot-starter-mustache')
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
 }
 
 test {
