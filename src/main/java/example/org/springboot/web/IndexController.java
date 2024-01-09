@@ -1,5 +1,6 @@
 package example.org.springboot.web;
 
+import example.org.springboot.config.auth.LoginUser;
 import example.org.springboot.config.auth.dto.SessionUser;
 import example.org.springboot.service.PostsService;
 import example.org.springboot.web.dto.PostsResponseDto;
@@ -20,10 +21,10 @@ public class IndexController {      // 페이지에 관련된 컨트롤러
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findAllDesc());
         // index.mustache에서 구글 소셜 로그인 할 때 userName 을 사용하므로 model에 userName을 저장해준다
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user");        //@LoginUser 애노테이션으로 대체됨
         if (user!=null){
             model.addAttribute("userName", user.getName());
         }

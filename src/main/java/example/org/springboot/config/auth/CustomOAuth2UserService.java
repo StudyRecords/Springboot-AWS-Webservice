@@ -6,6 +6,7 @@ import example.org.springboot.domain.user.User;
 import example.org.springboot.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -26,7 +27,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
+        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();     //대리인
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         // 로그인 진행중인 서비스를 구분하는 코드 (구글/카카오/네이버 등)
@@ -34,6 +35,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         //OAuth2 로그인 진행 시 키가 되는 필드값 (PK와 같은 의미)
         // 네이버와 구글 소셜로그인을 동시에 지원할 때 사용, 구글:코드(sub) 지원 / 네이버,카카오:기본 지원X
+
+        // 어떤 소셜서비스든 그 서비스에서 각 계정마다의 유니크한 id값을 전달해주겠다는 의미이다.
+        //(구글은 sub이라는 필드가 유니크 필드이며, 네이버는 id라는 필드가 유니크 필드이다)
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails()
                 .getUserInfoEndpoint()
@@ -44,9 +48,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.of(registrationId,
                 userNameAttributeName,
                 oAuth2User.getAttributes());
-
         User user = saveOrUpdate(attributes);
+
         httpSession.setAttribute("user", new SessionUser(user));            //SessionUser : 세션에 사용자 정보를 저장하기 위한 dto 클래스
+
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRole().getKey())),
                 attributes.getAttributes(),
