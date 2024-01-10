@@ -27,6 +27,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group 'org.example'
 version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -38,13 +39,17 @@ dependencies {      // 프로젝트 개발에 필요한 의존성들을 선언�
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    implementation('org.projectlombok:lombok')
+//    implementation('org.projectlombok:lombok:0.9.2')
+    implementation ('org.projectlombok:lombok:1.18.24')
+    annotationProcessor ('org.projectlombok:lombok:1.18.24')
+
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')     // spring data jpa : spring data jpa 추상화 라이브러리
     implementation('com.h2database:h2')                                         // h2 데이터베이스 : 인메모리 관계형 데이터베이스
     implementation('org.springframework.boot:spring-boot-starter-mustache')
     implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
     implementation('org.springframework.session:spring-session-jdbc')
     implementation('org.springframework.security:spring-security-test')
+//    implementation('mysql:mysql-connector-java:10.6.14')
 }
 
 test {
