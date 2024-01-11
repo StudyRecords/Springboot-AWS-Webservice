@@ -53,6 +53,8 @@ dependencies {      // 프로젝트 개발에 필요한 의존성들을 선언�
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation ('org.junit.jupiter:junit-jupiter-api')
     testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine')
+
+    implementation('org.mariadb.jdbc:mariadb-java-client')
 }
 
 test {
