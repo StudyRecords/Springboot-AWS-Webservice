@@ -2,6 +2,7 @@
 
 ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)        # stop.sh가 속해 있는 경로를 찾는다. (profile.sh의 경로를 찾기 위해 사용된다.)
+echo ">> ABSPATH: $ABSPATH / ABSDIR : $ABSDIR"
 source ${ABSDIR}/profile.sh          # 자바의 import문과 같은 역할을 한다.
 
 IDLE_PORT=$(find_idle_port)
