@@ -1,11 +1,11 @@
 # !/usr/bin/env bash
 #
-ASBPATH = $(readlink -f $0)
-ABSDIR = $(dirname $ABSPATH)
+ASBPATH=$(readlink -f $0)
+ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh
 
 function switch_proxy(){
-    IDLE_PORT = $(find_idle_port)
+    IDLE_PORT=$(find_idle_port)
 
     echo ">> 전환한 Port: $IDLE_PORT"
     echo ">> Port 전환"
